@@ -8,7 +8,7 @@
         sort: 'newest'
     };
 
-    const API_BASE = 'http://localhost:8000';
+    const API_BASE = '';
 
     // DOM elements
     const chatMessages = document.getElementById('chatMessages');
@@ -57,10 +57,10 @@
         });
 
         // Sort filter
-        const sortFiler = document.getElementById('sortFilter');
+        const sortFilter = document.getElementById('sortFilter');
         sortFilter.addEventListener('change', (e) => {
             currentFilters.sort = e.target.value;
-            updateClearFiltesButton();
+            updateClearFiltersButton();
             renderConversationList(applyFilters(allConversations));
         });
 
@@ -121,7 +121,7 @@
                                      currentFilters.sort !== 'newest';
 
             if (hasActiveFilters) {
-                conversationsList.innerHTML = `
+                conversationList.innerHTML = `
                 <div class="no-results">
                     No conversations match your filters
                 </div>
@@ -147,7 +147,7 @@
             const createDate = new Date(conv.created_at).toLocaleDateString();
             const lastMessageDate = conv.last_message_at
                 ? new Date(conv.last_message_at).toLocaleDateString()
-                : createdDate;
+                : createDate;
 
             // Highlight search term in conversation ID
             let displayId = conv.conversation_id;
@@ -282,10 +282,10 @@
 
             if (isComparisonMode) {
                 // Get selected models
-                const selectedModels = Array.from(document.querySelectorAll('.model-checkbox:checked''))
+                const selectedModels = Array.from(document.querySelectorAll('.model-checkbox:checked'))
                     .map(cb => cb.value);
 
-                if (selectdModels.length === 0) {
+                if (selectedModels.length === 0) {
                     alert('Please select at least one model');
                     thinkingDiv.remove();
                     return;
@@ -337,6 +337,7 @@
 
             // Refresh conversation list
             loadConversations();
+            }
 
         } catch (error) {
             thinkingDiv.remove();
@@ -387,7 +388,7 @@
             responseDiv.appendChild(modelLabel);
             responseDiv.appendChild(content);
             container.appendChild(responseDiv);
-        })};
+        });
 
         chatMessages.appendChild(container);
         chatMessages.scrollTop = chatMessages.scrollHeight;

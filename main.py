@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from backend.database import init_db
 from backend.conversation_store import (
     add_message,
@@ -68,6 +70,13 @@ def cleanup_conversations_endpoint(days_old: int = 30):
 
 # Attach all routes from app/routes.py
 app.include_router(api_router)
+
+# Serve frontend
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+@app.get("/ui")
+def serve_frontend():
+    return FileResponse("frontend/index.html")
 
 if __name__ == "__main__":
     import uvicorn
