@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Database
+*.db
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE settings
+.idea/
+.vscode/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+git add .
+git commit -m "Day 15 complete - persistence and conversation management"
+
