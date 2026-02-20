@@ -1,11 +1,11 @@
 from app.llm_clients.openai_client import ask_openai
 from app.llm_clients.claude_client import ask_claude
+from app.llm_clients.gemini_client import ask_gemini
 
 
 async def route_to_model(model_name: str, prompt: str, conversation_id: str | None) -> str:
     """
     Simple model router for multiple LLM backends (async version).
-    More models (Claude, Gemini) will be added later.
     """
     model_name = model_name.lower()
 
@@ -15,5 +15,7 @@ async def route_to_model(model_name: str, prompt: str, conversation_id: str | No
     if model_name in ("claude", "claude-3", "claude-3-5"):
         return await ask_claude(prompt, conversation_id)
 
-    # Placeholder for upcoming models - this keeps app stable
+    if model_name in ("gemini", "gemini-2", "gemini-2.0-flash", "gemini-2.5-pro"):
+        return await ask_gemini(prompt, conversation_id)
+
     return f"Model '{model_name}' not supported yet."

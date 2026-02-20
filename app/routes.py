@@ -7,7 +7,7 @@ from typing import Optional, List, Dict
 
 from app.utils.router import route_to_model
 from backend import conversation_store
-from app.llm_clients import openai_client, claude_client
+from app.llm_clients import openai_client, claude_client, gemini_client
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -115,6 +115,8 @@ async def compare_models(request: dict):
                 response_text = await openai_client.chat(message, history, model)
             elif "claude" in model.lower():
                 response_text = await claude_client.chat(message, history, model)
+            elif "gemini" in model.lower():
+                response_text = await gemini_client.chat(message, history, model)
             else:
                 response_text = f"Unknown model: {model}"
 
